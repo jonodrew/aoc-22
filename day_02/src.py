@@ -1,6 +1,5 @@
 import dataclasses
 import functools
-from collections import namedtuple
 from enum import IntEnum
 from typing import Optional
 
@@ -79,7 +78,22 @@ def result_mapping() -> dict[str, Outcome]:
     return {"X": Outcome.Loss, "Y": Outcome.Draw, "Z": Outcome.Win}
 
 
+def calculate_round_part_two(opponent_move: Move, preferred_outcome: Outcome) -> Move:
+    if preferred_outcome == Outcome.Draw:
+        return opponent_move
+    elif preferred_outcome == Outcome.Win:
+        return outcomes_list()[opponent_move].win.value
+    elif preferred_outcome == Outcome.Loss:
+        return outcomes_list()[opponent_move].lose.value
+
+
+def score_round_part_two(opponent_move: str, preferred_option: str) -> int:
+    my_move = calculate_round_part_two(convert_to_action(opponent_move), result_mapping()[preferred_option])
+    return my_move.value + result_mapping()[preferred_option].value
+
+
 def follow_strategy_part_two():
     score = 0
     for line in read_inputs():
-        pass
+        score += score_round_part_two(*line)
+    return score
