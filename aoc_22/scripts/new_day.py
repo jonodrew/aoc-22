@@ -11,12 +11,12 @@ def create_new_day(day_number):
     os.makedirs(dir_path)
     partial_path = partial(os.path.join, dir_path)
     repo = Repo(".")
-    make_new_file(partial_path("__init__.py"), repo)
-    make_new_file(partial_path(f"test_day_{day_number:02}.py"), repo)
-    make_new_file(partial_path("src.py"), repo)
-    make_new_file(partial_path("input.txt"), repo)
+    partial_new_file = partial(make_new_file, repo)
+    files = ["__init__.py", f"test_day_{day_number:02}.py", "src.py", "input.txt"]
+    for file in files:
+        partial_new_file(partial_path(file))
 
 
-def make_new_file(file_path: str, repo: Repo) -> None:
+def make_new_file(repo: Repo, file_path: str) -> None:
     open(file_path, "x").close()
     repo.index.add(file_path)
