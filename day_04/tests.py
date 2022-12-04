@@ -1,5 +1,8 @@
 from unittest.mock import patch
-from day_04.src import count_overlaps
+
+import pytest
+
+from day_04.src import count_overlaps, count_fully_contains
 
 
 def inputs_for_test():
@@ -12,6 +15,15 @@ def inputs_for_test():
     return input_string.split("\n")
 
 
-def test_count_overlaps():
+@pytest.fixture(autouse=True)
+def patch_inputs():
     with patch("day_04.src.read_in_from_file", return_value=inputs_for_test()):
-        assert count_overlaps() == 4
+        yield
+
+
+def test_count_overlaps(patch_inputs):
+    assert count_overlaps() == 4
+
+
+def test_count_contains(patch_inputs):
+    assert count_fully_contains() == 2

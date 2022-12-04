@@ -12,7 +12,7 @@ class CleaningArea:
         return set(range(self.start, self.end+1))
 
     def contains(self, other_area: 'CleaningArea') -> bool:
-        return self.start <= other_area.start and self.end >= other_area.end
+        return other_area.range.issubset(self.range)
 
     def overlaps(self, other_area: 'CleaningArea') -> bool:
         return bool(self.range.intersection(other_area.range))
@@ -45,4 +45,3 @@ def count_fully_contains() -> int:
 def count_overlaps() -> int:
     area_pairs = read_in_areas()
     return sum(map(overlaps, area_pairs))
-
