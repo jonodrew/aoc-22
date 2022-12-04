@@ -45,7 +45,7 @@ def fully_contains(area_pair: AreaPair) -> bool:
 
 def overlaps(area_pair: AreaPair) -> bool:
     first_area, second_area = area_pair
-    return first_area.overlaps(second_area) or second_area.overlaps(first_area)
+    return first_area.overlaps(second_area)
 
 
 def count_fully_contains() -> int:
