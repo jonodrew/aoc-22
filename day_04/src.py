@@ -1,4 +1,6 @@
 import dataclasses
+import functools
+
 from utils.read_in import read_in_from_file
 
 
@@ -7,7 +9,7 @@ class CleaningArea:
     start: int
     end: int
 
-    @property
+    @functools.cached_property
     def range(self):
         return set(range(self.start, self.end+1))
 
