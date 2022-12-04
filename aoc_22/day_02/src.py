@@ -3,7 +3,7 @@ import functools
 from enum import IntEnum
 from typing import Optional
 
-from utils.read_in import read_in_from_file
+from aoc_22.utils.read_in import read_in_from_file
 
 
 class Move(IntEnum):
@@ -31,6 +31,8 @@ def calculate_round(my_move: Move, opponent_move: Move) -> Outcome:
         return Outcome.Win if opponent_move == Move.PAPER else Outcome.Loss
     elif my_move == Move.PAPER:
         return Outcome.Win if opponent_move == Move.ROCK else Outcome.Loss
+    else:
+        raise ValueError
 
 
 def read_inputs():
@@ -39,7 +41,14 @@ def read_inputs():
 
 @functools.lru_cache
 def action_mapping():
-    return {"A": Move.ROCK, "X": Move.ROCK, "B": Move.PAPER, "Y": Move.PAPER, "Z": Move.SCISSORS, "C": Move.SCISSORS}
+    return {
+        "A": Move.ROCK,
+        "X": Move.ROCK,
+        "B": Move.PAPER,
+        "Y": Move.PAPER,
+        "Z": Move.SCISSORS,
+        "C": Move.SCISSORS,
+    }
 
 
 @functools.lru_cache
@@ -57,8 +66,8 @@ def follow_strategy():
 @dataclasses.dataclass
 class Node:
     value: Move
-    win: Optional['Node'] = None
-    lose: Optional['Node'] = None
+    win: Optional["Node"] = None
+    lose: Optional["Node"] = None
 
 
 def outcomes_list() -> dict[Move, Node]:
@@ -85,10 +94,14 @@ def calculate_round_part_two(opponent_move: Move, preferred_outcome: Outcome) ->
         return outcomes_list()[opponent_move].win.value
     elif preferred_outcome == Outcome.Loss:
         return outcomes_list()[opponent_move].lose.value
+    else:
+        raise ValueError
 
 
 def score_round_part_two(opponent_move: str, preferred_option: str) -> int:
-    my_move = calculate_round_part_two(convert_to_action(opponent_move), result_mapping()[preferred_option])
+    my_move = calculate_round_part_two(
+        convert_to_action(opponent_move), result_mapping()[preferred_option]
+    )
     return my_move.value + result_mapping()[preferred_option].value
 
 

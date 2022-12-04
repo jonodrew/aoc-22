@@ -2,7 +2,7 @@ import dataclasses
 import functools
 from typing import Iterator
 
-from utils.read_in import read_in_from_file
+from aoc_22.utils.read_in import read_in_from_file
 
 
 @dataclasses.dataclass

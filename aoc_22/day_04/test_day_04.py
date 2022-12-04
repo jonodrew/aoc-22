@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from day_04.src import count_overlaps, count_fully_contains
+from aoc_22.day_04.src import count_overlaps, count_fully_contains
 
 
 def inputs_for_test():
@@ -17,7 +17,7 @@ def inputs_for_test():
 
 @pytest.fixture(autouse=True)
 def patch_inputs():
-    with patch("day_04.src.read_in_from_file", return_value=inputs_for_test()):
+    with patch("aoc_22.day_04.src.read_in_from_file", return_value=inputs_for_test()):
         yield
 
 

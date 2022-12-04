@@ -1,6 +1,6 @@
 from typing import Sequence
 
-from utils.read_in import read_in_from_file
+from aoc_22.utils.read_in import read_in_from_file
 
 
 def read_elf_calories(inputs: Sequence[str]) -> set[int]:
