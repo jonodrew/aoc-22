@@ -1,7 +1,3 @@
-def next_set(previous_set: set, new_char: str) -> set:
-    return previous_set.union(set(new_char))
-
-
 def check_window(w: set, unique_chars: int) -> bool:
     return len(w) == unique_chars
 
