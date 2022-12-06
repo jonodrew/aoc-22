@@ -14,4 +14,18 @@ from .src import process_string
     ],
 )
 def test_process_string(test_input, position):
-    assert process_string(test_input) == position
+    assert process_string(test_input, 4) == position
+
+
+@pytest.mark.parametrize(
+    ["test_input", "position"],
+    [
+        ("bvwbjplbgvbhsrlpgdmjqwftvncz", 23),
+        ("nppdvjthqldpwncqszvftbrmjlhg", 23),
+        ("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 19),
+        ("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 29),
+        ("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 26),
+    ],
+)
+def test_message_marker(test_input, position):
+    assert process_string(test_input, 14) == position
