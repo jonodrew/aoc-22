@@ -1,5 +1,8 @@
+from unittest.mock import patch
+
 import pytest
-from .src import greater_than_length, Position, tail_step
+from .src import greater_than_length, Position, tail_step, calculate_final
+from ..utils.read_in import read_in_from_file
 
 
 @pytest.mark.parametrize(
@@ -32,3 +35,11 @@ def test_cardinal_move(diff, expected_position):
 )
 def test_tail_move(head, tail, expected_tail):
     assert tail_step(tail, head) == expected_tail
+
+
+def test_total_script():
+    with patch(
+        "aoc_22.day_09.src.read_in_from_file",
+        return_value=read_in_from_file("./aoc_22/day_09/test_input.txt"),
+    ):
+        assert len(calculate_final()) == 13

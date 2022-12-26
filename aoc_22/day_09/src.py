@@ -1,6 +1,7 @@
 import dataclasses
 import functools
-from typing import Literal, Sequence
+from typing import Literal, Iterator
+from aoc_22.utils.read_in import read_in_from_file
 
 
 @dataclasses.dataclass(frozen=True)
@@ -54,8 +55,11 @@ def step(d: Direction) -> Position:
     }[d]
 
 
-def read_instructions(filepath: str) -> Sequence[Instruction]:
-    pass
+def read_instructions(filepath: str) -> Iterator[Instruction]:
+    for instr in read_in_from_file(filepath):
+        direction, value = tuple(instr.split(" "))
+        if direction in {"U", "D", "L", "R"}:
+            yield direction, int(value)  # type: ignore
 
 
 def process_instruction(i: Instruction) -> list[Position]:
@@ -63,23 +67,26 @@ def process_instruction(i: Instruction) -> list[Position]:
     return [step(dir) for _ in range(distance)]
 
 
-def process_instructions(instr: Sequence[Instruction]) -> list[Position]:
-    return [
-        item for sublist in list(map(process_instruction, instr)) for item in sublist
-    ]
-
-
 def compute_instruction(
     h: Position, t: Position, instr: Instruction
-) -> tuple[Position, Position]:
+) -> tuple[Position, Position, set[Position]]:
+    tail_positions = set()
     for p in process_instruction(instr):
         h = head_move(h, p)
         t = tail_step(t, h)
-    return h, t
+        tail_positions.add(t)
+    return h, t, tail_positions
 
 
-def calculate_final():
-    pass
+def calculate_final() -> set[Position]:
+    head = Position(0, 0)
+    tail = Position(0, 0)
+    tail_positions = set()
+    tail_positions.add(tail)
+    for i in read_instructions("aoc_22/day_09/input.txt"):
+        head, tail, positions = compute_instruction(head, tail, i)
+        tail_positions = tail_positions.union(positions)
+    return tail_positions
 
 
 def head_move(current: Position, move: Position) -> Position:
