@@ -58,5 +58,13 @@ def mark_visible_in_forest(f: Forest) -> Forest:
     return rotate_grid(f)
 
 
+def beauty_score(west: int, east: int, south: int, north: int) -> int:
+    return east * west * north * south
+
+
+def find_trees_of_specific_height(height: int, forest: str) -> list[int]:
+    return [i for i, letter in enumerate(forest) if str(height) == letter]
+
+
 def part_one():
     return count_visible(mark_visible_in_forest(generate_forest()))
