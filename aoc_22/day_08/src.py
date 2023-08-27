@@ -1,5 +1,7 @@
 import dataclasses
 from itertools import chain
+from typing import Optional
+
 from aoc_22.utils.read_in import read_in_from_file
 
 
@@ -64,6 +66,20 @@ def beauty_score(west: int, east: int, south: int, north: int) -> int:
 
 def find_trees_of_specific_height(height: int, forest: str) -> list[int]:
     return [i for i, letter in enumerate(forest) if str(height) == letter]
+
+
+def count_lower_trees_in_row(trees: list[int], height: Optional[int] = None) -> int:
+    if height is None:
+        height = trees.pop()
+        return count_lower_trees_in_row(trees, height)
+    if not trees:
+        return 0
+    else:
+        next_tree = trees.pop()
+        if next_tree < height:
+            return 1 + count_lower_trees_in_row(trees, height)
+        else:
+            return 1
 
 
 def part_one():

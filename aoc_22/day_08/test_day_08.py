@@ -1,10 +1,12 @@
 import pytest
+
 from .src import (
     count_visible,
     Tree,
     mark_visible_in_forest,
     beauty_score,
     find_trees_of_specific_height,
+    count_lower_trees_in_row,
 )
 
 
@@ -52,3 +54,8 @@ def test_beauty_score(south, west, east, north, expected):
 @pytest.mark.parametrize(["height", "location"], [(7, [3]), (0, [1, 28])])
 def test_find_trees(test_forest_string, height, location):
     assert find_trees_of_specific_height(height, test_forest_string) == location
+
+
+@pytest.mark.parametrize(["row", "expected"], [([1], 0), ([1, 1, 1], 1), ([9, 8], 1)])
+def test_count_lower_trees(row, expected):
+    assert count_lower_trees_in_row(row) == expected
